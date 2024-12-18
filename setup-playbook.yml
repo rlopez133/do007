@@ -46,6 +46,11 @@
       when: inventory_hostname in groups['web']
       notify: Reload Firewall
 
+    - name: Update MOTD from Jinja2 Template
+      ansible.builtin.template:
+        src: templates/motd.j2
+        dest: /etc/motd
+
   handlers:
 
     - name: Reload Firewall
