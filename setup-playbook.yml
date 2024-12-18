@@ -31,7 +31,7 @@
         state: present
       when: inventory_hostname in groups['web']
 
-    - Ensure firewalld is running
+    - name: Ensure firewalld is running
       ansible.builtin.service:
         name: firewalld
         state: started
