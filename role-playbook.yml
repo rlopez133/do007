@@ -1,0 +1,6 @@
+---
+- name: Deploy Apache using a Role
+  hosts: web
+  become: true
+  roles:
+    - apache
