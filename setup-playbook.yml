@@ -39,7 +39,7 @@
       when: inventory_hostname in groups['web']
 
     - name: Allow HTTP traffic on webservers
-      ansible.postix.firewalld:
+      ansible.posix.firewalld:
         service: http
         permanent: true
         state: enabled
