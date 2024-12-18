@@ -1,6 +1,6 @@
 ---
 - name: Basic System Setup
-  hosts: web
+  hosts: all
   become: true
   tasks:
     - name: Update all security-related packages
@@ -11,6 +11,43 @@
    
     - name: Create a new user
       ansible.builtin.user:
-        name: "{{ user_name }}"
+        name: "{{ item }}"
         state: present
         create_home: true
+      loop:
+        - alice
+        - bob
+        - carol
+    
+    - name: Install Apache on our webservers
+      ansible.builtin.package: 
+        name: "{{ package_name }}"
+        state: present
+      when: inventory_hostname in groups['web']
+    
+    - name: Install firewalld
+      ansible.builtin.package:
+        name: firewalld
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - Ensure firewalld is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['web']
+
+    - name: Allow HTTP traffic on webservers
+      ansible.postix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      when: inventory_hostname in groups['web']
+      notify: Reload Firewall
+
+  handlers:
+    - name: Reload Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
