@@ -2,10 +2,6 @@
 - name: Basic System Setup
   hosts: web
   become: true
-  vars:
-    user_name: 'sean'
-    package_state: 'latest'
-    security_only: true
   tasks:
     - name: Update all security-related packages
       ansible.builtin.package:
