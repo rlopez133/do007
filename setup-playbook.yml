@@ -35,8 +35,8 @@
       when: inventory_hostname in groups['web']
       notify: Reload Firewall
 
-    handlers:
-      - name: Reload Firewall
-        ansible.builtin.service:
-          name: firewalld
-          state: reloaded
+  handlers:
+    - name: Reload Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
