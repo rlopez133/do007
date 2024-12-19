@@ -1,2 +1,6 @@
 ---
 # handlers file for apache
+- name: Reload Firewall
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
