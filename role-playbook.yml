@@ -1,6 +1,6 @@
 ---
-- name: Deploy Apache using a Role
+- name: Deploy Apache using a Collection
   hosts: web
   become: true
   roles:
-    - apache
+    - webops.apache.apache
